@@ -27,7 +27,7 @@ url: "https://www42.github.io" # the base hostname & protocol for your site, e.g
 twitter_username: tjkkll
 github_username:  www42
 
-# Fields minima uses, but are not defaulted
+# Fields minima uses, but are not defaulted by `jekyll new`
 author: Thomas Jäkel
 linkedin_username: tjkkll
 
