@@ -24,6 +24,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   This is the world-famous Azure for Trainers blog.
 baseurl: "/AFTBlog" # the subpath of your site, e.g. /blog
 url: "https://www42.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://blog.lochkarte.guru"
 twitter_username: tjkkll
 github_username:  www42
 
