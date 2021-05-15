@@ -21,7 +21,7 @@
 title: Azure for Trainers Blog
 email: thomas.jaekel@gfn.training
 description: >- # this means to ignore newlines until "baseurl:"
-  This is the world-famous Azure for Trainers blog.
+  "What you cannot create you do not understand." Richard Feynman
 #baseurl: "/AFTBlog" # the subpath of your site, e.g. /blog
 baseurl: ""
 url: "https://www42.github.io" # the base hostname & protocol for your site, e.g. http://example.com
