@@ -4,11 +4,50 @@ title: "Azure Managed Identities"
 date: 2021-05-14 12:15:27 ++0200
 categories: Azure Cloud OAuth2
 image1: /assets/images/2021-05-14-azure-managed-identities/how-it-works.png
+image2: /assets/images/2021-05-14-azure-managed-identities/MI-SP-general.png
+image3: /assets/images/2021-05-14-azure-managed-identities/System-assigned-MI.png
+image4: /assets/images/2021-05-14-azure-managed-identities/User-assigned-MI.png
+image5: /assets/images/2021-05-14-azure-managed-identities/MI-SP-VM.png
 ---
 
-Azure AD-managed identities for Azure resources (MI for short) is an admin friendly way to manage identities representing certain Azure resources like virtual machines, app services, Kubernetes clusters, and more. MIs are able to get permissions within Azure via Azure RBAC.
+Two common problems:
 
-Microsoft's documentation for Managed Identities (MI) starts [here](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/).
+* When a script is running inside an Azure VM: How to assign the script a certain authorization role, lets say Contributor to a resource group 😳
+
+* When an app running inside an Azure VM needs to know a secret connection string to access a storage account: How to authorize the app to the key vault containing the connection string 😳
+
+Creating a Service Principle does not meet the requirements, because the Service Principle needs to authenticate itselft by a secret or certificate. Maintaining secrets is just the problem.
+
+**Solution to all these problems is: Azure Managed Identity.**
+
+An Azure Managed Identity is an Azure resource type with a Service Principle in the background, i.e. inside Azure AD. While the Service Principle is authenticating itself by a certificate the corresponding automatically the Managed Identity can borrow the OAuth token from the Service Principal. This way a Managed Identity is able to get permissions within Azure via Azure RBAC.
+
+<img src="{{ page.image2 | relative_url }}" alt="Managed ID and Service Principal are connected" width="400"/>
+
+
+
+Documentation for Azure Managed Identity starts [here](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/).
+
+
+
+
+
+
+## System Assigned vs. User Assigned
+
+Virtual Machine is only an example. Managed Identity is available for many other Azure resource types, including App Services, Container Instance, Azure Function, Logic Apps and more.
+
+A *System Assigned MI* share the same lifecycle as the virtual machine it represents. If the virtual machine gets deleted the MI is deleted too.
+
+<img src="{{ page.image3 | relative_url }}" alt="System assigned Managed ID" width="400"/>
+
+A *User Assigned MI* is an independent resource in Azure. Zero, one, or more virtual machines can use the same MI. If all virtual machines are deleted the user assigned MI is still alive.
+
+<img src="{{ page.image4 | relative_url }}" alt="User assigned Managed ID" width="400"/>
+
+
+
+
 
 
 
@@ -27,13 +66,19 @@ http://169.254.169.254/metadata/instance
 John Savill created [a nice video](https://www.youtube.com/watch?v=M5BO91VOfXo) on this topic.
 
 
+
+
+
+
+
 ## How Managed Identity works for a VM
 
-Now the idea of Managed Identitiy:
+<img src="{{ page.image5 | relative_url }}" alt="MI for virtual machine" width="400"/>
+
 
 Starting with a VM without assigned MI. No matter wether it's Windows or Linux.
 
-<img src="{{ page.image1 | relative_url }}" alt="Root user login" width="900"/>
+<img src="{{ page.image1 | relative_url }}" alt="How it works" width="900"/>
 
 Image by [Microsoft Docs](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-managed-identities-work-vm).
 
@@ -58,8 +103,6 @@ http://169.254.169.254/metadata/identity/oauth2/token
 
 7. The access token is used by the app to get an Azure authorization.
 
-
-## User assigned vs. System assigned
 
 
 ## Demo
@@ -149,14 +192,3 @@ $response.value
 * For a complete list of Azure resources that support MI [click here](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/services-support-managed-identities).
 
 * You can decode a JSON Web Token (JWT) at [https://jwt.ms](https://jwt.ms/)
-
-
-## Unanswered Questions
-
-* How enumerate / get swagger of identity endpoint. There is no documentation.
-
-* Does an identity endpoint exist prior to enabling MI?
-
-* Inside VM1: How to get resource ID of the resource group without installing PowerShell module or Azure CLI?
-
-Cutting VM resource id after rg?
