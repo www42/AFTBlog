@@ -36,6 +36,6 @@ echo ""                             >> $postfile
 cat $postfile
 
 # Next steps:
-#    * Edit the postfile
+#    * Edit the postfile (Markdown)
 #    * Save images to imagedir
-#    * (If local jekyll available) bundle exec jekyll serve
+#    * Test it locally: bundle exec jekyll serve [--drafts]
