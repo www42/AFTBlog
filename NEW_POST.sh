@@ -9,10 +9,10 @@ ls -l _posts
 today=$(date +"%Y-%m-%d")
 fulldate=$(date +"%Y-%m-%d %T %z")
 
-title='"Azure Static Web Apps"'
-title2="$today-azure-static-web-apps"
+title='"Jupyter Notebooks in VS Code"'
+title2="$today-jupyter-notebooks-in-vs-code"
 
-categories="Azure Cloud Web"
+categories="VS-Code Jupyter"
 
 imagedir="assets/images/$title2"
 mkdir $imagedir
