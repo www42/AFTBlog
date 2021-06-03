@@ -20,6 +20,8 @@ image1: /assets/images/2021-06-03-jupyter-notebooks-in-vs-code/screenshot-vscode
 
 3. In VS Code from command palette select `.NET Interactive: Create new blank notebook`
 
+That's it.
+
 <img src="{{ page.image1 | relative_url }}" alt="screenshot vs code" width="900"/>
 
 Example notebooks in the screenshot above are located [here][Examples].
