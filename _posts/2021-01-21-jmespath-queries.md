@@ -4,6 +4,7 @@ title:      "JMESPath Queries"
 date:       2021-01-21 17:30:00 +0100
 categories: Azure CLI JMESPath
 image1:     assets/images/2021-01-21-jmespath-queries/jpterm.png
+image2:     assets/images/2021-01-21-jmespath-queries/array-vs-object.png
 ---
 
 [ms-docs]:        https://docs.microsoft.com/en-us/cli/azure/query-azure-cli
@@ -12,127 +13,86 @@ image1:     assets/images/2021-01-21-jmespath-queries/jpterm.png
 [jpterm]:         https://github.com/jmespath/jmespath.terminal
 
 
-JMESPath queries are very useful to filter Azure CLI output.
+**JMESPath queries are very useful to filter Azure CLI output.**
 
 This post is an excerpt of:
-* Query command results with Azure CLI - [Microsoft Docs][ms-docs]
-* CLI 2.0 JMESPATH - [Azure Citadel][azure-citadel]
+* [Query command results with Azure CLI - Microsoft Docs][ms-docs]
+* [CLI 2.0 JMESPATH - Azure Citadel][azure-citadel]
 
-### Arrays and Objects
-
-In the JSON world there are two kinds of things - arrays and objects. For a complete language specification see [JMESPath.org][jmespath].
-
-An object is a collection of `key:value` pairs surrounded by curly brackets, eg
-
-```json
-{
-    "id": "/subscriptions/xxxxxxxx-82ee-49bf-a689-825a603e5c08/resourceGroups/Cloudshell-RG",
-    "location": "westeurope",
-    "managedBy": null,
-    "name": "Cloudshell-RG",
-    "properties": {
-      "provisioningState": "Succeeded"
-    },
-    "tags": {},
-    "type": "Microsoft.Resources/resourceGroups"
-}
-```
-
-In contrast an array is a list of elements - values and/or object - surrounded by square brackets, eg
-```json
-[
-    1,
-    2,
-    "foo",
-    {
-      "bar":[
-        3,
-        4
-      ]
-    },
-    5
-]
-```
-
-Assuming JSON as the default output format it is a common need to filter the outcome of Azure CLI commands. Luckily there is the global --query parameter do perform JMESPath queries.
+For a complete language specification see [JMESPath.org][jmespath].
 
 
+### In the JSON world ...
 
-### Selecting Array Elements
+...there are two kinds of things - lists and objects:
+
+  <img src="{{ page.image2 | relative_url }}" alt="array vs. object" width="800"/>
+
+
+In Azure CLI a `list` command will produce a list, whereas a `show` command will show an object. Often a list is a list of objects.
+
+JSON is the default format of Azure CLI outputs. Therefore it's a common need to filter JSON outcome. The global `--query` parameter accepts JMESPath queries only.
+
+Let's have a look to JMESPath queries.
+
+### Selecting values
 
 ```bash
-az group list                           # array starting point
-az group list --query "[*]"             # all elements (pass through the whole array)
-az group list --query "[0]"             # first element
-az group list --query "[1]"             # second element
-az group list --query "[-1]"            # last element
-az group list --query "[0:2]"           # [a:b]  slicing from a to b-1  (sic!)
+az group show -g $rg    # single object with several key:value pairs
+
+az group show -g $rg --query "name"                          # single value
+az group show -g $rg --query "[name,location]"               # two values, output is formatted as a list
+az group show -g $rg --query "{foo:name,bar:location}"       # two values, output is formatted as an object, 
+                                                             # keys are required, just added 'foo' and 'bar'
+az group show -g $rg --query "{name:name,location:location}" # More convinient keys.
+
 ```
 
-Fun fact: Slicing always generates an array
+### Selecting objects from the list
 
 ```bash
-az group list --query "[0]"             # single object
-az group list --query "[:1]"            # array (with a single object)
+az group list                       # list of all objects, i.e. resource groups
+
+az group list --query "[0]"         # first object
+az group list --query "[1]"         # second object
+az group list --query "[-1]"        # last object
+az group list --query "[0:2]"       # first to second object,[a:b]  slicing from a to b-1  (sic!)
+az group list --query "[*]"         # all objects
+az group list --query "[]"          # all objects but flatten them, see below
+
 ```
 
 
-### Selecting an Individual Value of an Object
+### Combine it with `.` operator
 
 ```bash
-az group list --query "[0]"             # single object starting point
-az group list --query "[0].location"    # value is a string surrounded by double quotes
-az group list --query "[0].managedBy"   # value is 'null'
-az group list --query "[0].properties"  # value is an object
-az group list --query "[0].properties.provisioningState"  # value for provisioningState within the properties object
+az group list --query "[0].name"
+az group list --query "[*].[name,location]"
+az group list --query "[].{name:name,location:location}"
+
 ```
 
-
-### Selecting Multiple Values
-
-```bash
-az group list --query "[0].[name,location]"
-az group list --query "[0].[name,location,properties]"
-az group list --query "[*].[name,location,properties]"
-```
-
-Magic trick - Instead of array `[*].[]` use an object `[*].{}`
+### Advanced: Filter objects with projection operator  `?key=='value'`
 
 ```bash
-az group list --query "[*].{name,location}"                 # doesn't work - keys are missing
-az group list --query "[*].{foo:name,bar:location}"         # keys added
-az group list --query "[*].{name:name,location:location}"   # better keys
-```
-
-Tipp: Use variable to store complex queries
-
-```bash
-query="[*].{name:name,location:location}"
-az group list --query $query
-```
-
-### Filter Objects
-
-Projection Operator  `?key=='value'`
-
-```bash
-az group list --query "[?name=='Cloudshell-RG']"
-az group list --query "[?name=='Cloudshell-RG' && location=='westeurope']"  #  &&    logical AND
-                                                                            #  ||    logical OR
+az group list --query "[?name=='foo']"
+az group list --query "[?name=='foo' && location=='westeurope']"  #  &&    logical AND
+                                                                  #  ||    logical OR
 ```                                                                            
 
 What other comapators do exist?
 
-```bash
-#   ==  equal
-#   !=  not equal
-#   >   greater then (numeric values only)
-#   etc
-```
+`==`  equal
+
+`!=`   not equal
+
+`>`   greater then (numeric values only)
+
+etc.
 
 
 
-### Functions
+### Even more advanced: Functions
 
 ```bash
 # length()
@@ -158,11 +118,11 @@ az group list --query "[?name=='Cloudshell-RG'].name"           # array of a sin
 az group list --query "[?name=='Cloudshell-RG'].name | [0]"     # string
 ```
 
-### Flatten an Array 
 
-Flatten Operator `[]`
+### Flatten Operator `[]`
 
-Example 1 (`jpterm flat1.json`)
+Example 1
+
 ```json
 [
     1,2,[3,[4,5],6],7,[8,9]
@@ -176,7 +136,7 @@ Example 1 (`jpterm flat1.json`)
 ```
 
 
-Example 2 (`jpterm flat2.json`)
+Example 2
 ```json
 {
     "foo": [
@@ -193,10 +153,26 @@ Example 2 (`jpterm flat2.json`)
 #   foo[*].numbers.[]               [1,2,3,4,5,6]
 ```
 
-### Tool `jpterm`
+### Tipps
 
-Great tool for exploring JMESPath queries.
+***Tipp 1:*** 
+*Use variable to store complex queries*
+
+```bash
+query="[*].{name:name,location:location}"
+az group list --query $query
+```
+
+
+***Tipp 2:*** 
+*Format output as table in conjuction with queries*
+
+```bash
+az ... list --query ... --output table
+```
+
+
+***Tipp 3:*** 
+*Try* `jpterm` *Great tool for exploring JMESPath queries.*
 
 <img src="{{ page.image1 | relative_url }}" alt="jpterm" width="800"/>
-
-Tipp: `^-5` erase JMESPath expression
