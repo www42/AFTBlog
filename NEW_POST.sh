@@ -11,10 +11,10 @@ ls -l _drafts
 today=$(date +"%Y-%m-%d")
 fulldate=$(date +"%Y-%m-%d %T %z")
 
-title='"GitHub Actions - Getting started"'
-title2="$today-github-actions-getting-started"
+title='".Net, the Universe and Everything"'
+title2="$today-dotnet-the-universe-and-everything"
 
-categories="GitHub Azure Bicep"
+categories=".Net GitHub"
 
 imagedir="assets/images/$title2"
 mkdir $imagedir
@@ -23,22 +23,22 @@ touch $imagedir/.git_keep
 postfile="_drafts/$title2.md"
 # postfile="_posts/$title2.md"
 
-echo "---"                                   > $postfile
-echo "layout: post"                         >> $postfile
-echo "title: $title"                        >> $postfile
-echo "date: $fulldate"                      >> $postfile
-echo "categories: $categories"              >> $postfile
-echo "image1: /$imagedir/dummy.png"         >> $postfile
-echo "---"                                  >> $postfile
-echo ""                                     >> $postfile
-echo "[Microsoft Docs]:https://docs.microsoft.com/en-us/" >> $postfile
-echo ""                                     >> $postfile
-echo "## How it works"                      >> $postfile
-echo ""                                     >> $postfile
-echo "[See documentation.][Microsoft Docs]" >> $postfile
-echo ""                                     >> $postfile
-echo '<img src="{{ page.image1 | relative_url }}" alt="dummy" width="900"/>' >> $postfile
-echo ""                                     >> $postfile
+echo "---"                                                                    > $postfile
+echo "layout: post"                                                          >> $postfile
+echo "title: $title"                                                         >> $postfile
+echo "date: $fulldate"                                                       >> $postfile
+echo "categories: $categories"                                               >> $postfile
+echo "image1: /$imagedir/dummy.png"                                          >> $postfile
+echo "---"                                                                   >> $postfile
+echo ""                                                                      >> $postfile
+echo "[Microsoft Docs]:https://docs.microsoft.com/en-us/"                    >> $postfile
+echo ""                                                                      >> $postfile
+echo "## How it works"                                                       >> $postfile
+echo ""                                                                      >> $postfile
+echo "[See documentation.][Microsoft Docs]{:target="_blank"}"                >> $postfile
+echo ""                                                                      >> $postfile
+echo '[<img src="{{ page.image1 | relative_url }}" alt="dummy" width="900"/>][Microsoft Docs]{:target="_blank"}' >> $postfile
+echo ""                                                                      >> $postfile
 
 
 cat $postfile
