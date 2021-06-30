@@ -11,10 +11,10 @@ ls -l _drafts
 today=$(date +"%Y-%m-%d")
 fulldate=$(date +"%Y-%m-%d %T %z")
 
-title='".Net, the Universe and Everything"'
-title2="$today-dotnet-the-universe-and-everything"
+title='"Reusable Lego Bricks in Bicep"'
+title2="$today-reusable-lego-bricks-in-bicep"
 
-categories=".Net GitHub"
+categories="Bicep ARM Azure Automation"
 
 imagedir="assets/images/$title2"
 mkdir $imagedir
@@ -35,7 +35,7 @@ echo "[Microsoft Docs]:https://docs.microsoft.com/en-us/"                    >> 
 echo ""                                                                      >> $postfile
 echo "## How it works"                                                       >> $postfile
 echo ""                                                                      >> $postfile
-echo "[See documentation.][Microsoft Docs]{:target="_blank"}"                >> $postfile
+echo '[See documentation.][Microsoft Docs]{:target="_blank"}'                >> $postfile
 echo ""                                                                      >> $postfile
 echo '[<img src="{{ page.image1 | relative_url }}" alt="dummy" width="900"/>][Microsoft Docs]{:target="_blank"}' >> $postfile
 echo ""                                                                      >> $postfile
