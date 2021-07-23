@@ -11,8 +11,8 @@ ls -l _drafts
 today=$(date +"%Y-%m-%d")
 fulldate=$(date +"%Y-%m-%d %T %z")
 
-title='"Reusable Lego Bricks in Bicep"'
-title2="$today-reusable-lego-bricks-in-bicep"
+title='"How to update a Bicep resource"'
+title2="$today-how-to-update-a-bicep-resource"
 
 categories="Bicep ARM Azure Automation"
 
