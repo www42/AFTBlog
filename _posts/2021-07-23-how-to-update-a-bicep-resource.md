@@ -7,7 +7,7 @@ image1: /assets/images/2021-07-23-how-to-update-a-bicep-resource/bicep-logo-256.
 image2: /assets/images/2021-07-23-how-to-update-a-bicep-resource/vnet.bicep.png
 image3: /assets/images/2021-07-23-how-to-update-a-bicep-resource/main.bicep.png
 image4: /assets/images/2021-07-23-how-to-update-a-bicep-resource/vnet_update.bicep.png
-image5: /assets/images/2021-07-23-how-to-update-a-bicep-resource/module-structure.png
+image5: /assets/images/2021-07-23-how-to-update-a-bicep-resource/main-modules.bicep.png
 ---
 
 [Microsoft Docs]:https://docs.microsoft.com/en-us/azure/architecture/guide/azure-resource-manager/advanced-templates/update-resource
