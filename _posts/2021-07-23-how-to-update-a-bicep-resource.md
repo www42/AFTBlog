@@ -17,7 +17,7 @@ image5: /assets/images/2021-07-23-how-to-update-a-bicep-resource/module-structur
 [Azure Bastion Learning Module]:https://docs.microsoft.com/en-us/learn/modules/intro-to-azure-bastion/
 
 
-[<img src="{{ page.image1 | relative_url }}" alt="dummy" width="100"/>][Bicep GitHub]{:target="_blank"}
+[<img src="{{ page.image1 | relative_url }}" alt="bicep logo" width="100"/>][Bicep GitHub]{:target="_blank"}
 [Project Bicep][Bicep GitHub]{:target="_blank"}
 
 Lets say you want to deploy a virtual network on Azure with a single subnet. In Bicep this reads a few lines of code:
@@ -39,7 +39,7 @@ The output from the creating Bicep module is take from the updating Bicep module
 <img src="{{ page.image5 | relative_url }}" alt="bicep module structure" width="900"/>
 
 
-You can find the file [here](https://github.com/www42/AFT/tree/main/Bicep/Update_Bicep_Resource).
+You can find the files [here](https://github.com/www42/AFT/tree/main/Bicep/Update_Bicep_Resource){:target="_blank"}.
 
 ## Reference
 [Update a resource in an Azure Resource Manager template (Microsoft Docs)][Microsoft Docs]{:target="_blank"}
