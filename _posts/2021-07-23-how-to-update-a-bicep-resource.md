@@ -36,7 +36,7 @@ Put this altogether in a Bicep module structure
 
 The output from the creating Bicep module is taken by the updating Bicep module as input
 
-<img src="{{ page.image5 | relative_url }}" alt="bicep module structure" width="900"/>
+<img src="{{ page.image5 | relative_url }}" alt="bicep module structure" width="600"/>
 
 
 You can find the files [here](https://github.com/www42/AFT/tree/main/Bicep/Update_Bicep_Resource){:target="_blank"}.
