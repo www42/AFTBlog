@@ -4,6 +4,10 @@ title: "How to update a Bicep resource"
 date: 2021-07-23 09:09:41 +0200
 categories: Bicep ARM Azure Automation
 image1: /assets/images/2021-07-23-how-to-update-a-bicep-resource/bicep-logo-256.png
+image2: /assets/images/2021-07-23-how-to-update-a-bicep-resource/vnet.bicep.png
+image3: /assets/images/2021-07-23-how-to-update-a-bicep-resource/main.bicep.png
+image4: /assets/images/2021-07-23-how-to-update-a-bicep-resource/vnet_update.bicep.png
+image5: /assets/images/2021-07-23-how-to-update-a-bicep-resource/module-structure.png
 ---
 
 [Microsoft Docs]:https://docs.microsoft.com/en-us/azure/architecture/guide/azure-resource-manager/advanced-templates/update-resource
@@ -18,102 +22,26 @@ image1: /assets/images/2021-07-23-how-to-update-a-bicep-resource/bicep-logo-256.
 
 Lets say you want to deploy a virtual network on Azure with a single subnet. In Bicep this reads a few lines of code:
 
-```bash
-param name string
-param location string = resourceGroup().location
-
-resource vnet 'Microsoft.Network/virtualNetworks@2021-02-01' = {
-  name: name
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        '172.16.0.0/16'
-      ]
-    }
-    subnets: [
-      {
-        name: 'ServerSubnet'
-        properties: {
-          addressPrefix: '172.16.0.0/24'
-        }
-      }
-    ]
-  }  
-}
-
-output vnet object = vnet
-output vnetName string = vnet.name
-```
+<img src="{{ page.image2 | relative_url }}" alt="vnet.bicep" width="900"/>
 
 Next you want to deploy an Azure Bastion in order to connect to VM living in the virtual network.
 
 An **additional subnet** is a prerequisite for Azure Bastion. So you need to update the virtual network resource
 
-```bash
-param vnet object
-param vnetName string
-param location string = resourceGroup().location
-
-resource vnet_updated 'Microsoft.Network/virtualNetworks@2021-02-01' = {
-  name: vnetName
-  location: location
-  properties: {
-    addressSpace: {
-      addressPrefixes: [
-        vnet.properties.addressSpace.addressPrefixes[0]
-      ]
-    }
-    subnets: [
-      {
-        name: vnet.properties.subnets[0].name
-        properties: {
-          addressPrefix: vnet.properties.subnets[0].properties.addressPrefix
-        }
-      }
-      {
-        name: 'AzureBastionSubnet'
-        properties: {
-          addressPrefix: '172.16.1.0/24'
-        }
-      }
-    ]
-  }
-}
-```
+<img src="{{ page.image4 | relative_url }}" alt="vnet_update.bicep" width="900"/>
 
 Put this altogether in a Bicep module structure
 
-```bash
-targetScope = 'subscription'
-param rgName string 
+<img src="{{ page.image3 | relative_url }}" alt="main.bicep" width="900"/>
 
-resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: rgName
-  location: deployment().location
-}
+The output from the creating Bicep module is take from the updating Bicep module as input
 
-// Create virtual network
-module vnet 'vnet.bicep' = {
-  name: 'vnetDeployment'
-  scope: rg
-  params: {
-    name: 'VNet1'
-  }
-}
+<img src="{{ page.image5 | relative_url }}" alt="bicep module structure" width="900"/>
 
-// Update virtual network
-module vnet_update 'vnet_update.bicep' = {
-  name: 'vnet_updateDeployment'
-  scope: rg
-  params: {
-    vnet: vnet.outputs.vnet
-    vnetName: vnet.outputs.vnetName
-  }
-}
-```
 
-## Refernce
+You can find the file [here](https://github.com/www42/AFT/tree/main/Bicep/Update_Bicep_Resource).
+
+## Reference
 [Update a resource in an Azure Resource Manager template (Microsoft Docs)][Microsoft Docs]{:target="_blank"}
 
 
