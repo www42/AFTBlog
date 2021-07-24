@@ -34,7 +34,7 @@ Put this altogether in a Bicep module structure
 
 <img src="{{ page.image3 | relative_url }}" alt="main.bicep" width="900"/>
 
-The output from the creating Bicep module is take from the updating Bicep module as input
+The output from the creating Bicep module is taken by the updating Bicep module as input
 
 <img src="{{ page.image5 | relative_url }}" alt="bicep module structure" width="900"/>
 
