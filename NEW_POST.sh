@@ -11,10 +11,10 @@ ls -l _drafts
 today=$(date +"%Y-%m-%d")
 fulldate=$(date +"%Y-%m-%d %T %z")
 
-title='"How to update a Bicep resource"'
-title2="$today-how-to-update-a-bicep-resource"
+title='"GitHub Actions - Hello World!"'
+title2="$today-github-actions-Hello-world"
 
-categories="Bicep ARM Azure Automation"
+categories="GitHub CI/CD Automation"
 
 imagedir="assets/images/$title2"
 mkdir $imagedir
