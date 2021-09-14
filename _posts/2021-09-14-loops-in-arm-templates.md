@@ -10,6 +10,8 @@ image1: /assets/images/2021-09-14-loops-in-arm-templates/dummy.png
 
 ## Resource loops
 
+
+
 {% highlight json linenos %}
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
