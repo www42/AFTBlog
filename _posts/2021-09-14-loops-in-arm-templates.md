@@ -28,7 +28,7 @@ image1: /assets/images/2021-09-14-loops-in-arm-templates/dummy.png
                 "count": 3,
                 "name": "routeTableLoop"
             },
-            "name": "[concat( 'RouteTable-', copyIndex(2) )]",
+            "name": "[concat( 'RouteTable-', copyIndex() )]",
             "location": "westeurope",
             "properties": {}
         }
@@ -37,6 +37,25 @@ image1: /assets/images/2021-09-14-loops-in-arm-templates/dummy.png
 }
 {% endhighlight %}
 
+This template will deploy three route tables. Their names are constructed by concatenating the fix string `RouteTable-` and the `copyIndex()` resulting in
+
+```
+RouteTable-0
+RouteTable-1
+RouteTable-2
+```
+
+You can shift the copyIndex by yielding an argument, so 
+{% highlight json linenos %}
+            "name": "[concat( 'RouteTable-', copyIndex(2) )]",
+{% endhighlight %}
+
+will result in 
+```
+RouteTable-2
+RouteTable-3
+RouteTable-4
+```
 
 ## Variable loops
 
