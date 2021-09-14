@@ -45,9 +45,11 @@ RouteTable-1
 RouteTable-2
 ```
 
-You can shift the copyIndex by yielding an argument, so 
+You can shift the `copyIndex()` by yielding an argument, so 
 {% highlight json linenos %}
+{
             "name": "[concat( 'RouteTable-', copyIndex(2) )]",
+}
 {% endhighlight %}
 
 will result in 
@@ -58,6 +60,58 @@ RouteTable-4
 ```
 
 ## Variable loops
+
+But what if you want to name the route tables
+```
+RouteTable-NetworkA
+RouteTable-NetworkB
+RouteTable-NetworkC
+```
+
+Possible solution:
+
+{% highlight json linenos %}
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualNetworkNames": {
+            "type": "array",
+            "defaultValue": [
+                "NetworkA",
+                "NetworkB",
+                "NetworkC"
+            ]
+        }
+    },
+    "functions": [],
+    "variables": {
+        "networkCount": "[length(parameters('virtualNetworkNames'))]",
+        "copy": [
+            {
+                "name": "routeTableNames",
+                "count": "[variables('networkCount')]",
+                "input": "[concat( 'RouteTable-', parameters('virtualNetworkNames')[copyIndex('routeTableNames')] )]"
+            }
+        ]
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2020-11-01",
+            "copy": {
+                "count": 3,
+                "name": "routeTableLoop"
+            },
+            "name": "[variables('routeTableNames')[copyIndex()]]",
+            "location": "westeurope",
+            "properties": {}
+        }
+    ],
+    "outputs": {}
+}
+{% endhighlight %}
+
 
 ## Learn more
 
