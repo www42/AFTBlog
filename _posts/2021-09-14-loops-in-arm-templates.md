@@ -6,6 +6,8 @@ categories: Azure ARM Automation
 ---
 
 [ARM Templates Docs]:https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/
+[Serial or parallel]:https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/copy-resources#serial-or-parallel
+[Another operation in progress]:https://docs.microsoft.com/en-us/answers/questions/259861/error-anotheroperationinprogress-during-vnet-creat.html
 
 ## Resource loops
 
@@ -110,6 +112,15 @@ Possible solution:
     "outputs": {}
 }{% endhighlight %}
 
+## Serial or parallel
+
+[According to the docs][Serial or parallel]{:target="_blank"}  there are two modes of a copy loop: Serial and parallel.
+
+You cannot create subnets in a virtual network in parallel. You have to use serial mode, see [here][Another operation in progress]{:target="_blank"}.
+
+## No loops on child resources
+
+You have to write it as top level resource.
 
 ## Learn more
 
