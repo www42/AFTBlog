@@ -19,6 +19,7 @@ categories="GitHub Jekyll"
 imagedir="assets/images/$title2"
 mkdir $imagedir
 touch $imagedir/.git_keep
+cp assets/images/dummy.png $imagedir
 
 postfile="_drafts/$title2.md"
 # postfile="_posts/$title2.md"
@@ -37,7 +38,7 @@ echo "## How it works"                                                       >> 
 echo ""                                                                      >> $postfile
 echo '[See documentation.][Microsoft Docs]{:target="_blank"}'                >> $postfile
 echo ""                                                                      >> $postfile
-echo '[<img src="{{ page.image1 | relative_url }}" alt="dummy" width="900"/>][Microsoft Docs]{:target="_blank"}' >> $postfile
+echo '<img src="{{ page.image1 | relative_url }}" alt="dummy" width="900"/>' >> $postfile
 echo ""                                                                      >> $postfile
 
 
