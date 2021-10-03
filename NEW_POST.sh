@@ -11,10 +11,10 @@ ls -l _drafts
 today=$(date +"%Y-%m-%d")
 fulldate=$(date +"%Y-%m-%d %T %z")
 
-title='"Loops in ARM Templates"'
-title2="$today-loops-in-arm-templates"
+title='"How to set up Minimal Mistakes theme for GitHub Pages"'
+title2="$today-how-to-set-up-minimal-mistakes-theme-for-github-pages"
 
-categories="Azure ARM Automation"
+categories="GitHub Jekyll"
 
 imagedir="assets/images/$title2"
 mkdir $imagedir
