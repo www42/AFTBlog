@@ -3,26 +3,29 @@ layout: post
 title: "How to set up Minimal Mistakes theme for GitHub Pages"
 date: 2021-10-03 21:38:53 +0200
 categories: GitHub Jekyll
-image1: /assets/images/2021-10-03-how-to-set-up-minimal-mistakes-theme-for-github-pages/dummy.png
+image1: /assets/images/2021-10-03-how-to-set-up-minimal-mistakes-theme-for-github-pages/Enable-GHPages-for-Repo.png
 ---
 
 [Christian Posta]:https://blog.christianposta.com/theme-setup/
 [Quick-Start Guide]:https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
 
-<img src="{{ page.image1 | relative_url }}" alt="dummy" width="100"/>
 
 
-## New Jekyll site with MM (Minimal Mistakes) theme
+## Set up a new site with Minimal Mistakes (MM) theme
 
 See [Christian Posta's blog post][Christian Posta]{:target="_blank"}.
 
-1. Fork MM's repo, rename the forked repo 
+* Fork [MM's repo](https://github.com/mmistakes/minimal-mistakes){:target="_blank"}, optional: Rename the forked repo 
 
-2. Clone the forked repo
+* Enable GH Pages for the forked repo
 
-3. Install required Gems
+<img src="{{ page.image1 | relative_url }}" alt="Enable GH Pages for repo" width="900"/>
 
-Create a new `Gemfile`
+* Clone the forked repo
+
+
+
+* Create a new `Gemfile`
 
 ```
 source "https://rubygems.org"
@@ -44,16 +47,17 @@ group :jekyll_plugins do
 end
 ```
 
-Run 
+* Optional: Install required Gems for local testing
 
+Run 
 ```
 bundle install
 ```
 
 
-4. Remove unnecessary file
+* Remove unnecessary file
 
-See [MM quick-start guide][Quick-Start Guide]{:target="_blank"}.
+See [MM quick-start guide][Quick-Start Guide]{:target="_blank"}. Remove these files and folders
 
 ```
 /docs
@@ -65,4 +69,30 @@ CHANGELOG.md
 minimal-mistakes-jekyll.gemspec
 screenshot.png
 screenshot-layouts.png
+```
+
+* Optional: Test site locally
+
+```
+bundle exec jekyll serve
+```
+
+
+* Commit changes to GitHub repo
+
+
+## Configuration
+
+### _config.yaml
+
+
+## Migrate existing blog posts to MM
+
+Change the layout declaration
+```
+layout: post
+```
+into
+```
+layout: posts
 ```
