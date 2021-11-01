@@ -1,6 +1,6 @@
-# Be sure you are in the right directory.
-# List previos posts
+# Be sure you are in the right directory ~/git/AFTBlog
 tree -FL 1
+# List previous posts
 ls -l _posts
 ls -l _drafts
 
@@ -11,8 +11,8 @@ ls -l _drafts
 today=$(date +"%Y-%m-%d")
 fulldate=$(date +"%Y-%m-%d %T %z")
 
-title='"How to set up Minimal Mistakes theme for GitHub Pages"'
-title2="$today-how-to-set-up-minimal-mistakes-theme-for-github-pages"
+title='"Conatiner Groups in Azure Container Instances (ACI)"'
+title2="$today-conatiner-groups-in-azure-container-instances-aci"
 
 categories="GitHub Jekyll"
 
