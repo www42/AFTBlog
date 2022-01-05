@@ -24,4 +24,4 @@ That's it.
 
 <img src="{{ page.image1 | relative_url }}" alt="screenshot vs code" width="900"/>
 
-Example notebooks in the screenshot above are located [here][Examples].
+Example notebooks in the screenshot above are located [here][Examples]{:target="_blank"}.
