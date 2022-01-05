@@ -14,9 +14,9 @@ image1: /assets/images/2021-06-03-jupyter-notebooks-in-vs-code/screenshot-vscode
 
 ## Notebooks for C# and PowerShell - It's super easy
 
-1. [Install .NET 5 SDK][.Net 5]
+1. [Install .NET 5 SDK][.Net 5]{:target="_blank"}
 
-2. [Install the .NET Interactive Notebooks extension for VS Code][.Net Interactive Extension]
+2. [Install the .NET Interactive Notebooks extension for VS Code][.Net Interactive Extension]{:target="_blank"}
 
 3. In VS Code from command palette select `.NET Interactive: Create new blank notebook`
 
