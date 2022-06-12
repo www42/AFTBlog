@@ -11,10 +11,10 @@ ls -l _drafts
 today=$(date +"%Y-%m-%d")
 fulldate=$(date +"%Y-%m-%d %T %z")
 
-title='"Conatiner Groups in Azure Container Instances (ACI)"'
-title2="$today-conatiner-groups-in-azure-container-instances-aci"
+title='"Why there is a Terraform state?"'
+title2="$today-why-there-is-a-terraform-state"
 
-categories="GitHub Jekyll"
+categories="Terraform Azure"
 
 imagedir="assets/images/$title2"
 mkdir $imagedir
@@ -32,7 +32,7 @@ echo "categories: $categories"                                               >> 
 echo "image1: /$imagedir/dummy.png"                                          >> $postfile
 echo "---"                                                                   >> $postfile
 echo ""                                                                      >> $postfile
-echo "[Microsoft Docs]:https://docs.microsoft.com/en-us/"                    >> $postfile
+echo "[Microsoft Docs]: https://docs.microsoft.com/en-us/"                    >> $postfile
 echo ""                                                                      >> $postfile
 echo "## How it works"                                                       >> $postfile
 echo ""                                                                      >> $postfile
